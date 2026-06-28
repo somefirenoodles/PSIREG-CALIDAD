@@ -24,7 +24,7 @@ def list_issues():
 
 
 def labels(issue):
-    return [label.get('name', '') for label in issue.get('labels', [])]
+    return [label.get('name', '').lower() for label in issue.get('labels', [])]
 
 
 def field(body, name):
@@ -35,6 +35,17 @@ def field(body, name):
     if match:
         return match.group(1).strip().replace('\n', ' ')
     return ''
+
+
+def issue_type(title, ls):
+    t = (title or '').lower()
+    if 'riesgo' in ls or t.startswith('[riesgo]'):
+        return 'riesgo'
+    if 'zap' in ls or t.startswith('[zap]'):
+        return 'zap'
+    if 'evaluacion' in ls or t.startswith('[evaluacion]'):
+        return 'evaluacion'
+    return 'artefacto'
 
 
 def write(path, content):
@@ -64,13 +75,14 @@ def generate(issues):
         modulo = field(body, 'Modulo') or 'General'
         obs = field(body, 'Observacion') or ''
         responsable = ', '.join(a.get('login', '') for a in issue.get('assignees', [])) or 'Por asignar'
+        tipo = issue_type(title, ls)
 
-        if 'riesgo' in ls:
+        if tipo == 'riesgo':
             riesgos.append(f'| {codigo} | {title} | {field(body, "Probabilidad") or "Pendiente"} | {field(body, "Impacto") or "Pendiente"} | {field(body, "Prioridad") or "Pendiente"} | {field(body, "Mitigacion") or "Pendiente"} | {estado} |')
-        elif 'zap' in ls:
+        elif tipo == 'zap':
             zap.append(f'| {codigo} | {title} | {field(body, "Severidad") or "Pendiente"} | {field(body, "Confianza") or "Pendiente"} | {modulo} | {evidencia} | {field(body, "Prioridad") or "Pendiente"} | {estado} | {field(body, "Accion correctiva") or "Pendiente"} |')
-        elif 'evaluacion' in ls:
-            evaluacion.append(f'| {codigo} | {field(body, "Caracteristica") or "Pendiente"} | {title} | {evidencia} | {field(body, "Resultado") or "0"} | {obs} |')
+        elif tipo == 'evaluacion':
+            evaluacion.append(f'| {codigo} | {field(body, "Caracteristica") or "Pendiente"} | {field(body, "Criterio") or title} | {evidencia} | {field(body, "Resultado") or "0"} | {obs} |')
         else:
             trazas.append(f'| {codigo} | {title} | {modulo} | {fase} | {field(body, "Artefacto") or "Issue"} | {evidencia} | {estado} | {field(body, "Resultado") or "Pendiente"} | {obs} |')
             tablero.append(f'| {title} | {fase} | {estado} | {responsable} | {evidencia} | {field(body, "Proxima accion") or "Pendiente"} |')
