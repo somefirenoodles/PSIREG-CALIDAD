@@ -51,6 +51,14 @@ def validate(issues, config):
         raw_state = field(body, "Estado")
         if raw_state and raw_state not in valid_states:
             errors.append(error(number, f"Estado invalido: {raw_state}"))
+        closed_state = config["github"].get("closed_state", "Cerrado")
+        if issue.get("state") == "open" and raw_state == closed_state:
+            errors.append(
+                error(
+                    number,
+                    f"el campo Estado es {closed_state}, pero el issue sigue abierto en GitHub",
+                )
+            )
 
         phase = field(body, "Fase")
         if phase and phase not in valid_phases:
@@ -68,7 +76,7 @@ def validate(issues, config):
                     error(number, f"Resultado invalido: {result}; debe comenzar por 0, 1 o 2")
                 )
 
-        if type_name == "zap" and issue_state(issue, config) == rules["zap_not_executable_state"]:
+        if type_name == "zap" and raw_state == rules["zap_not_executable_state"]:
             has_cause = any(
                 not is_empty(field(body, cause_field))
                 for cause_field in rules["zap_cause_fields"]

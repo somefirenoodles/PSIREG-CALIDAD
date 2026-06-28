@@ -12,6 +12,8 @@ Repositorio documental para implementar **VSEST-Lite** como soporte de calidad d
 | `docs/05_seguridad/` | Auditoría OWASP ZAP y clasificación de vulnerabilidades. |
 | `docs/06_evaluacion/` | Escala ternaria e instrumento de evaluación del producto. |
 | `docs/07_cierre/` | Cierre, lecciones aprendidas y validación final. |
+| `docs/08_tablero/` | Tablero documental generado desde los issues. |
+| `docs/10_dashboard/` | Resumen automático del estado del framework. |
 
 ## Uso
 

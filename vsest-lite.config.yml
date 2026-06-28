@@ -6,6 +6,7 @@ project:
 github:
   repository: somefirenoodles/VSEST-Lite
   issue_state: all
+  closed_state: Cerrado
 
 issue_types:
   artefacto:
@@ -16,7 +17,10 @@ issue_types:
       - Modulo
       - Fase
       - Estado
+      - Artefacto
       - Evidencia
+      - Resultado
+      - Proxima accion
 
   riesgo:
     display_name: Riesgos

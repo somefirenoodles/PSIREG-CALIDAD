@@ -87,10 +87,12 @@ def issue_type(issue, config):
 
 
 def issue_state(issue, config):
+    if issue.get("state") == "closed":
+        return config["github"].get("closed_state", "Cerrado")
     value = field(issue.get("body") or "", "Estado")
     if value:
         return value
-    return "Cerrado" if issue.get("state") == "closed" else "Pendiente"
+    return "Pendiente"
 
 
 def markdown(value, fallback="Pendiente"):

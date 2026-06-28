@@ -19,6 +19,14 @@ body:
     validations:
       required: true
 
+  - type: input
+    id: artefacto
+    attributes:
+      label: Artefacto
+      placeholder: docs/02_trazabilidad/matriz_ejecucion.md
+    validations:
+      required: true
+
   - type: dropdown
     id: fase
     attributes:
@@ -53,6 +61,22 @@ body:
     attributes:
       label: Evidencia
       placeholder: docs/02_trazabilidad/matriz_ejecucion.md
+    validations:
+      required: true
+
+  - type: input
+    id: resultado
+    attributes:
+      label: Resultado
+      placeholder: Pendiente
+    validations:
+      required: true
+
+  - type: textarea
+    id: proxima_accion
+    attributes:
+      label: Proxima accion
+      placeholder: Describa el siguiente paso verificable.
     validations:
       required: true
 

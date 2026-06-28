@@ -2,6 +2,8 @@ name: Validate VSEST-Lite Issues
 
 on:
   workflow_dispatch:
+  issues:
+    types: [opened, edited, closed, reopened]
 
 permissions:
   contents: read

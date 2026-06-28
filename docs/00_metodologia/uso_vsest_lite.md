@@ -24,6 +24,9 @@ matrices y un dashboard documental. Sus reglas se definen en
   mantienen en `vsest-lite.config.yml`.
 - Todo issue estructurado requiere `Codigo`, y no puede repetir el de otro issue.
 - Los estados y fases declarados deben pertenecer a las escalas configuradas.
+- Un issue cerrado en GitHub tiene estado efectivo `Cerrado`, aunque el cuerpo
+  conserve un valor anterior. En un issue abierto manda el campo `Estado`, pero
+  no puede declarar `Cerrado` hasta que el issue se cierre en GitHub.
 - La prioridad de un riesgo debe ser `Baja`, `Media`, `Alta` o `Critica`.
 - Un resultado de evaluacion debe comenzar por `0`, `1` o `2`.
 - Un ZAP con estado `No ejecutable` debe explicar la causa en `Causa` u
